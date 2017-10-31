@@ -10,7 +10,7 @@ void myPrint(int num[]){
 	myFor(N){
 		printf("%d ",num[i]);
 	}
-	printf("/n");
+	printf("\n");
 }
 
 int main(void){

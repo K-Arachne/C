@@ -1,29 +1,32 @@
 #include<stdio.h>
 #include<time.h>
-#define N 3
+#define N 20
+
+void myPrint(int *);
 
 void seiretu(int kumi,int *num){
 	int i,kari,j,k;
-	for(j=0;j<kumi;j++){
-		for(i=j;i<N-kumi;i+=kumi){
-			kari=num[i];
-			for(k=i;k<N-kumi;k+=kumi){
-				if(kari>num[i+k]){
-					num[k]=num[k+kumi];
+	for(k=0;k<kumi;k++){
+		for(i=k;i<N-kumi;i+=kumi){
+			kari = num[i+kumi];
+			for(j=i;j>=0;j-=kumi){
+				if(num[j]>kari){
+					num[j+kumi] = num[j];
 				}else{
-					num[k]=kari;
+					break;
 				}
+				num[j]=kari;
 			}
-			//printf("num[%d] ",i);
 		}
-		printf("\n");
 	}
+	printf("%d間隔でソート\n",kumi);
+	myPrint(num);
 }
 
 void myPrint(int *num){
 	int i;
 	for(i=0;i<N;i++){
-		printf("%d ",num[i]);
+		printf("%2d ",num[i]);
 	}
 	printf("\n");
 }
@@ -33,9 +36,11 @@ int main(void){
 
 	srand((unsigned)time(NULL));
 	for(i=0;i<N;i++){
-		num[i]=rand()%(N+1);
+		//num[i]=rand()%(N+1);
+		num[i]=N-i;
 	}
 
+	printf("元データ\n");
 	myPrint(num);
 
 	int h=1;
@@ -43,10 +48,11 @@ int main(void){
 		h=3*h + 1;
 	}
 	while(h>0){
-		printf("%d\n",h);
 		seiretu(h,num);
 		h=(h-1)/3;
 	}
+
+	printf("結果\n");
 	myPrint(num);
 
 
